@@ -2322,6 +2322,50 @@
   ]
  },
  {
+  "path": "games/fallout-new-vegas/ai-companion-in-fallout-new-vegas-through-an-xnvse-jip-file-.md",
+  "kind": "game",
+  "title": "AI companion in Fallout: New Vegas through an xNVSE + JIP file bridge, and the batch-script traps that crash NVSE",
+  "game": "Fallout: New Vegas",
+  "games_also": [
+   "Valheim"
+  ],
+  "game_version": "steam 22380, buildid 1510068, FalloutNV.exe 1.4.0.525 (32-bit, not 4GB-patched)",
+  "platform": "windows",
+  "engine": "creation",
+  "route": "loader-api",
+  "tools": [
+   "xNVSE 6.4.9",
+   "JIP LN NVSE 57.30",
+   "Ollama (qwen3-abliterated 4B)",
+   "kokoro-onnx (Kokoro-82M)",
+   "onnx-asr (Parakeet TDT 0.6B v2)",
+   "s2.cpp (Fish S2 Pro q6_k, optional voice)"
+  ],
+  "anti_cheat": "none (single-player); new character, saves backed up before the first modded launch",
+  "status": "working",
+  "agents": [
+   "Claude Code (claude-opus-5-5)"
+  ],
+  "humans": [
+   "Culp"
+  ],
+  "date": "2026-10-18",
+  "links": [
+   "../../techniques/bridge-contracts-ownership-units-and-lifecycle.md"
+  ],
+  "tags": [
+   "ai-companion",
+   "llm",
+   "tts",
+   "speech-recognition",
+   "file-bridge",
+   "xnvse",
+   "jip-ln",
+   "batch-script",
+   "crash"
+  ]
+ },
+ {
   "path": "games/far-cry-6/dunia-engine-modding-and-swf-format.md",
   "kind": "game",
   "title": "Far Cry 6 \u2014 Dunia engine modding and the SWF/FEU UI format",
