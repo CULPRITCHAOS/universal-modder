@@ -18,7 +18,7 @@ tools:
 anti_cheat: none (single-player); new character, saves backed up before the first modded launch
 status: working
 agents:
-- Claude Code (claude-opus-5-5)
+- Claude Code (Opus 5.5)
 humans:
 - Culp
 date: '2026-10-18'
@@ -47,8 +47,10 @@ tags:
 ## Setup
 - Steam build above, Windows 11, RTX 5070 12 GB. New character; saves zipped before the first modded launch.
 - xNVSE 6.4.9 (GitHub release) and JIP LN NVSE 57.30 (Nexus). No other mods, no 4GB patch, no engine fixes.
-- **Launch through `nvse_loader.exe`.** Starting from Steam does not load NVSE, and the only symptom is
-  `GetNVSEVersion` being unknown in the console. Point the desktop shortcut at the loader.
+- **Launch through `nvse_loader.exe`.** Starting from Steam didn't load NVSE in this setup, and the only symptom
+  was `GetNVSEVersion` being unknown in the console. Point the desktop shortcut at the loader. (xNVSE's README
+  says a Steam launch works when Steam's in-game overlay, its "Steam Community" option, is enabled, or after the
+  4GB patch.)
 - `Data\NVSE\nvse_config.ini`: `bAlwaysPrintScriptCompilationError=1`, or compile errors stay invisible.
 - The external side: Python 3.11, Ollama, the kit's own venv. Nothing else is installed into the game.
 
@@ -57,7 +59,8 @@ A loader-API file bridge. JIP's main-loop callback runs a batch script every 15 
 files and runs one pending command line that the Python side drops in a file. Considered: a native NVSE plugin
 with a socket (more work in a 32-bit C++ toolchain, and the files were fast enough); an ESP made with the GECK
 (not needed: everything is done with runtime commands on existing forms). The prior-art repos found
-(chasm / chasm-bridge-fnv) carry no licence, so they were used for ideas only.
+([chasm](https://github.com/chasmlol/chasm) / [chasm-bridge-fnv](https://github.com/chasmlol/chasm-bridge-fnv))
+carry no licence, so they were used for ideas only.
 
 ## How the game works (what we had to learn)
 - **JIP Script Runner:** text files in `Data\NVSE\plugins\scripts\` run on game events, chosen by name prefix.
@@ -65,10 +68,13 @@ with a socket (more work in a 32-bit C++ toolchain, and the files were fast enou
   `gs_`, `gx_` and `xm_`.
 - `SetGameMainLoopCallback (begin function {} ... end) 1 15` runs a lambda every 15 frames. **Main-loop callbacks
   survive loading a save**, so an `ln_` script that registers one adds another on every load (see Gotchas).
-- `RunBatchScript "<path>"` compiles a text file and runs it. It **caches by file name once compiled**, until the
-  game restarts. A file that FAILS to compile is not cached and is re-parsed on every call.
-- `RunScriptSnippet` runs only the first statement of a multi-line string (CRLF, LF and literal `\n` all tried),
-  so it is only good for one-liners such as `RunBatchScript "...cmd_123.txt"`.
+  JIP's source drops a callback before a load only when its mode flag (4th argument, default 3 = GameMode +
+  MenuMode) includes 8, so `... 1 15 11` should also give one loop per load. That variant wasn't tested here.
+- `RunBatchScript "<path>"` (JIP) compiles a text file and runs it. It **caches by file name once compiled**, until
+  the game restarts. The key is the bare file name, not the path, so two `tick.txt` in different folders share one
+  entry. A file that FAILS to compile is not cached and is re-parsed on every call.
+- In our tests `RunScriptSnippet` ran only the first statement of a multi-line string (CRLF, LF and literal `\n`
+  all tried), so here it was only used for one-liners such as `RunBatchScript "...cmd_123.txt"`.
 - `ReadStringFromFile` / `WriteStringToFile` (with `%r` newline, `%i` form id, `%n` name, `%g` number, `%z`
   string) are the whole transport.
 - Perception: `GetFirstRef 200 1` / `GetNextRef` walk the actors around the player. Per actor:
@@ -118,10 +124,11 @@ with a socket (more work in a 32-bit C++ toolchain, and the files were fast enou
 4. **A crash a minute or two after loading a save (a jump into freed memory).** **Cause:** loops registered from
    the console and from `ln_` kept running across loads, and two of them were failing compiles every tick (6,800
    errors). **Fix:** the `gr_`/`ln_` flag file (one loop per launch); never register test loops from the console.
+   Mode flag 8 (above) is the untested alternative.
 5. **A changed batch file still behaves like the old one.** **Cause:** `RunBatchScript` caches by name until
    restart. **Fix:** a new file name for every version (and for every command).
-6. **Only the first line of a snippet runs.** **Cause:** `RunScriptSnippet` executes one statement.
-   **Fix:** multi-line code goes in batch files; snippets only call them.
+6. **Only the first line of a snippet runs.** **Cause:** in our tests `RunScriptSnippet` executed one statement
+   (see Open questions). **Fix:** multi-line code goes in batch files; snippets only call them.
 7. **An inline lambda fails to compile.** **Cause:** a 512-character limit inside parentheses. **Fix:** the lambda
    only calls `RunBatchScript` on a file.
 8. **`playerRef` is unknown in batch scripts.** **Fix:** use `player`.
@@ -147,5 +154,7 @@ into gotchas 1–4.
 - Stability: whether the remaining engine crash goes away with the usual fixes (4GB patch, NVTF) plus a crash
   logger to name it. Not attempted.
 - A `goto` order (move to a spot) is not implemented. Perception does not report the companion's custom name.
+- Whether `RunScriptSnippet` runs several statements when the lines are joined with `%r` in its format string.
+  JIP replaces LF with CR before compiling a snippet, which suggests multi-line snippets are meant to work.
 - A small LLM (4B) holds a tone but not depth. A bigger model or a faster expressive voice competes with the
   game for the same 12 GB of VRAM.
