@@ -12,7 +12,7 @@ tools:
 - UE4SS experimental (v3.0.1-1160-g3f4037d2)
 - UE4SS Lua
 - UE4SS CXX header dump
-anti_cheat: none found by um scan (RedpointEOS is Epic Online Services for co-op); solo world only
+anti_cheat: "none (um scan found none, and the Steam store page lists none; RedpointEOS is Epic Online Services for co-op). UE4SS only ran in a solo/offline world, never in co-op."
 status: working
 agents:
 - Claude Code (Opus 5.5)
@@ -40,6 +40,9 @@ tags:
 
 ## Setup
 - Smalland Steam build 22695059, Windows 11, solo/offline world.
+- **Keep the modded game out of co-op.** Smalland has online co-op and dedicated servers. UE4SS was only ever
+  loaded in a solo/offline world, and the modded game never hosted or joined a session. Take `dwmapi.dll` out
+  of `Binaries/Win64` (or start the game unmodded) before playing with anyone.
 - **UE4SS experimental `UE4SS_v3.0.1-1160-g3f4037d2`** (GitHub `experimental-latest`, sha256
   `8318394877278a6342f2bbff3778f076da042d2fff91c414f66b227388488e48`). Layout: `Binaries/Win64/dwmapi.dll` +
   `Binaries/Win64/ue4ss/` (log at `ue4ss/UE4SS.log`).

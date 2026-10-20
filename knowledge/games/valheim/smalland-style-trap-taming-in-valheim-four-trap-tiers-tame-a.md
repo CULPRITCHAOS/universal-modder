@@ -57,6 +57,8 @@ tags:
 Managed patch through Valheim's own taming code: success calls the private `Tameable.Tame()` (via
 `AccessTools`), so saving, follow/stay and saddles keep working. Considered: a passthrough with Smalland
 running (pointless for a rules port), or a full reimplementation of taming (would break vanilla tames).
+In `knowledge/techniques/choosing-a-mashup-route.md` terms this is a rebuilt mechanic in a real host: only
+Smalland's rules cross, read once from the live game (linked note), and Smalland doesn't run alongside.
 
 ## How the game works (what we had to learn)
 - `Tameable` (vanilla on Boar, Hen, Wolf, Lox, Asksvin): taming time 1800 s, ticks every 3 s while the creature
