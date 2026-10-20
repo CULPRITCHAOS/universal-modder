@@ -2430,7 +2430,7 @@
   "anti_cheat": "none (single-player); new character, saves backed up before the first modded launch",
   "status": "working",
   "agents": [
-   "Claude Code (claude-opus-5-5)"
+   "Claude Code (Opus 5.5)"
   ],
   "humans": [
    "Culp"
