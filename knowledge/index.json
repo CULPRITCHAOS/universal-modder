@@ -6241,6 +6241,45 @@
   ]
  },
  {
+  "path": "games/smalland-survive-the-wilds/reading-the-taming-system-live-with-ue4ss-trap-tiers-creatur.md",
+  "kind": "game",
+  "title": "Reading the taming system live with UE4SS: trap tiers, creature difficulty and the measured success formula",
+  "game": "Smalland: Survive the Wilds",
+  "games_also": [
+   "Valheim"
+  ],
+  "game_version": "steam 768200, buildid 22695059, UE 4.27 (++UE4+Release-4.27)",
+  "platform": "windows",
+  "engine": "unreal",
+  "route": "loader-api",
+  "tools": [
+   "UE4SS experimental (v3.0.1-1160-g3f4037d2)",
+   "UE4SS Lua",
+   "UE4SS CXX header dump"
+  ],
+  "anti_cheat": "none (um scan found none, and the Steam store page lists none; RedpointEOS is Epic Online Services for co-op). UE4SS only ran in a solo/offline world, never in co-op.",
+  "status": "working",
+  "agents": [
+   "Claude Code (Opus 5.5)"
+  ],
+  "humans": [
+   "Culp"
+  ],
+  "date": "2026-10-05",
+  "links": [
+   "../valheim/smalland-style-trap-taming-in-valheim-four-trap-tiers-tame-a.md"
+  ],
+  "tags": [
+   "ue4ss",
+   "taming",
+   "gameplay-ability-system",
+   "measurement",
+   "oracle",
+   "encrypted-paks",
+   "live-read"
+  ]
+ },
+ {
   "path": "games/star-wars-battlefront-ii-2005/porting-a-skinned-starcraft-ii-character-onto-the-swbf2-2005.md",
   "kind": "game",
   "title": "Porting a skinned StarCraft II character onto the SWBF2 (2005) infantry skeleton",
@@ -7495,6 +7534,48 @@
    "lightning",
    "splitner",
    "returning-weapon"
+  ]
+ },
+ {
+  "path": "games/valheim/smalland-style-trap-taming-in-valheim-four-trap-tiers-tame-a.md",
+  "kind": "game",
+  "title": "Smalland-style trap taming in Valheim: four trap tiers, tame-anything switch and a rideable Seeker Soldier",
+  "game": "Valheim",
+  "games_also": [
+   "Smalland: Survive the Wilds"
+  ],
+  "game_version": "steam 892970, built on buildid 25527674; re-verified on 25909357 (Valheim 1.0.20), Unity 6000.0.75f1 (Mono)",
+  "platform": "windows",
+  "engine": "unity-mono",
+  "route": "managed-patch",
+  "tools": [
+   "BepInExPack_Valheim 5.4.2351",
+   "Jotunn 2.30.2",
+   "HarmonyX",
+   "ilspycmd 9.1.0.7988",
+   ".NET 8 SDK (net472 target)"
+  ],
+  "anti_cheat": "none found by um scan; local test world and test character only",
+  "status": "in-progress",
+  "agents": [
+   "Claude Code (Opus 5.5)"
+  ],
+  "humans": [
+   "Culp"
+  ],
+  "date": "2026-10-05",
+  "links": [
+   "../smalland-survive-the-wilds/reading-the-taming-system-live-with-ue4ss-trap-tiers-creatur.md"
+  ],
+  "tags": [
+   "mashup",
+   "mechanic-port",
+   "taming",
+   "mount",
+   "saddle",
+   "jotunn",
+   "custom-piece",
+   "harmony"
   ]
  },
  {
